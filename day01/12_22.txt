@@ -1,0 +1,49 @@
+pip3 install django==2.2.5
+pip install virtualenv 
+pip install virtualenvwrapper
+pip install virtualenv-clone
+
+workon
+virtualenv -p -python3 py3_001
+workon 
+workon py3_001
+deactivate
+
+
+django-admin startproject bookmanager
+python manage.py startapp book
+'book',
+from django.db import models
+class BookInfo(models.Model):
+
+        name = models.CharField(max_length=30)
+        
+
+class PeopleInfo(models.Model):
+       
+        name = models.CharField(max_length=30)
+        gender = models.CharField()
+        age = models.IntegerField()
+
+python manage.py makemigrations
+python manage.py migrate
+
+python manage.py runserver
+
+
+settings里面修改本地化，zh-Hans,Asia/Shanghai,Debug改为False，同时把Allowed_host的选项改为127.0.0.1，
+在项目中添加app时要在App里面注册一下，在项目名下新建一个template文件夹，在setting里面添加路径os.path.join(BASE_DIR, ' template'
+models.py写好后在admin里面进行注册 admin.site.register(模型类名)
+
+viws里面写着视图函数，一般会返回一个response结果所以必须要导入HttpResponse 代码如下 def index(request): return HttpResponse("ok") 
+新建一个urls.py from django.urls import path
+from book.views import index
+
+urlpatterns = [
+    path('index/', index)
+]
+在原有的urls.py文件中要添加包含新建urls.py的路径    path('', include('book.urls')),要导入一个include
+
+
+
+         
