@@ -1,0 +1,70 @@
+新建模型类之后，会进行数据库的查询，用的是manage.py里面的
+的shell，
+先说新建数据,在系统中新建database，记得charset='utf8'
+	     接着在settings里面把数据库换成mysql，并且设置数据的信息
+	     host,post,user,password,name
+	
+python manage.py shell
+from book.models import BookInfo,PeopleInfo
+book = BookInfo.objects.create(key1='value1',key2='value2')
+
+第二种方法：
+book=BookInfo()
+book.key1=value1
+book.key2=value2
+book.key3=value3
+book.save()
+
+更新数据
+
+book=BookInfo.objects.get(id=1)
+book.key=value
+book.save()
+
+
+BookInfo.objects.filter(id=1)
+.update(key1='value1',key2='value2')
+
+删除
+book=BookInfo.objects.get(id=1)
+book.delete()
+
+或者
+book=BookInfo.objects.get(id=1).delete(）
+
+查询就是get,filter,F,Q,aggregate
+get返回的是一个单一数据，filter返回的是一个列表
+
+模型类.object.filter(属性名称__比较运算符=值）
+BookInfo.object.filter(name__gt='令狐冲')
+id__exact=2
+name__contains='湖'
+__endswith
+name__isnull=True
+id__in=[1,2,3]
+exclude(id=3)
+
+查询F对象
+from django.db.models import F
+BookInfo.objects.filter(readcount__gt=F("commentcount"))
+
+逻辑——与，或，非   Q
+from django.db.models import Q
+BookInfo.objects.filter(Q() 逻辑运算符Q())
+
+
+ aggragate代表着Max,Min,Avg,Count,Sum的集合
+BookInfo.object.aggragate(Sum('readcount'))
+
+BookInfo.objects.all().order_by('readcount')
+BookInfo.objects.all().order_by('-readcount')逆序
+
+
+
+
+
+
+
+
+
+ 
